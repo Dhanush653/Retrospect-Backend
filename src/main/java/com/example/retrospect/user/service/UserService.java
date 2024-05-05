@@ -1,6 +1,7 @@
 package com.example.retrospect.user.service;
 
 import com.example.retrospect.user.dto.LoginDTO;
+import com.example.retrospect.user.dto.ResetPasswordDTO;
 import com.example.retrospect.user.dto.SignUpDTO;
 import com.example.retrospect.user.dto.UpdateUserDTO;
 import com.example.retrospect.user.entity.UserEntity;
@@ -64,16 +65,34 @@ public class UserService implements IUserService {
         Optional<UserEntity> userOptional = iUserRepository.findById(id);
         if(userOptional.isPresent()) {
             UserEntity user = userOptional.get();
-
-            // Update only username and email
             user.setUserName(userEntity.getUserName());
             user.setUserEmail(userEntity.getUserEmail());
-
-            // Save and return the updated user
             return iUserRepository.save(user);
         } else {
-            // Handle the case when user is not found
-            return null; // or throw an exception
+            return null;
         }
     }
+
+    @Override
+    public String resetPassword(String userEmail, String oldPassword, String newPassword) {
+        UserEntity user = iUserRepository.findByEmailId(userEmail); // Using userEmail parameter
+        if (user != null && bCryptPasswordEncoder.matches(oldPassword, user.getUserPassword())) { // Using oldPassword parameter
+            // Encode the new password
+            String newPasswordHash = bCryptPasswordEncoder.encode(newPassword); // Using newPassword parameter
+
+            // Set new encoded password
+            user.setUserPassword(newPasswordHash);
+
+            // Save the updated user
+            iUserRepository.save(user);
+
+            // Return success message or updated user details
+            return "Password reset successful";
+        } else {
+            // Return error message or handle as needed
+            return "Invalid email or old password";
+        }
+    }
+
+
 }

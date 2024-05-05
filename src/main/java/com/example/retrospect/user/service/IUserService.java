@@ -1,6 +1,7 @@
 package com.example.retrospect.user.service;
 
 import com.example.retrospect.user.dto.LoginDTO;
+import com.example.retrospect.user.dto.ResetPasswordDTO;
 import com.example.retrospect.user.dto.SignUpDTO;
 import com.example.retrospect.user.dto.UpdateUserDTO;
 import com.example.retrospect.user.entity.UserEntity;
@@ -16,4 +17,6 @@ public interface IUserService {
     Optional<UserEntity> getUserByJWT(String token);
 
     UserEntity updateUser(int id, UpdateUserDTO userEntity);
+
+    String resetPassword(String userEmail, String oldPassword, String newPassword);
 }

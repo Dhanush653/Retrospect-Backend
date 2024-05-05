@@ -1,6 +1,7 @@
 package com.example.retrospect.user.controller;
 
 import com.example.retrospect.user.dto.LoginDTO;
+import com.example.retrospect.user.dto.ResetPasswordDTO;
 import com.example.retrospect.user.dto.SignUpDTO;
 import com.example.retrospect.user.dto.UpdateUserDTO;
 import com.example.retrospect.user.entity.UserEntity;
@@ -41,5 +42,11 @@ public class UserController {
     @PutMapping("/update/{id}")
     public UserEntity updateUser (@PathVariable int id, @RequestBody UpdateUserDTO userEntity) {
         return service.updateUser(id,userEntity);
+    }
+
+    @PostMapping("/resetpassword")
+    public String resetPassword (@RequestBody ResetPasswordDTO resetPassword) {
+        return service.resetPassword(resetPassword.getUserEmail(), resetPassword.getOldPassword(), resetPassword.getNewPassword());
+
     }
 }
