@@ -1,9 +1,6 @@
 package com.example.retrospect.user.controller;
 
-import com.example.retrospect.user.dto.LoginDTO;
-import com.example.retrospect.user.dto.ResetPasswordDTO;
-import com.example.retrospect.user.dto.SignUpDTO;
-import com.example.retrospect.user.dto.UpdateUserDTO;
+import com.example.retrospect.user.dto.*;
 import com.example.retrospect.user.entity.UserEntity;
 import com.example.retrospect.user.repository.IUserRepository;
 import com.example.retrospect.user.service.IUserService;
@@ -48,5 +45,14 @@ public class UserController {
     public String resetPassword (@RequestBody ResetPasswordDTO resetPassword) {
         return service.resetPassword(resetPassword.getUserEmail(), resetPassword.getOldPassword(), resetPassword.getNewPassword());
 
+    }
+
+    @PostMapping("/forgot")
+    String forgetPassword(@RequestBody ForgotPasswordDTO request){
+        return service.forgotPassword(request.getUserEmail());
+    }
+    @PostMapping("/change")
+    String changePassword(@RequestBody ChangePasswordDTO change){
+        return service.changePassword(change.getUserEmail(),change.getUserOtp(),change.getUserNewPassword());
     }
 }

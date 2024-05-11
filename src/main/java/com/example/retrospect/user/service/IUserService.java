@@ -19,4 +19,8 @@ public interface IUserService {
     UserEntity updateUser(int id, UpdateUserDTO userEntity);
 
     String resetPassword(String userEmail, String oldPassword, String newPassword);
+
+    String forgotPassword(String email);
+
+    String changePassword(String email, String otp, String newPassword);
 }

@@ -6,6 +6,7 @@ import com.example.retrospect.user.dto.SignUpDTO;
 import com.example.retrospect.user.dto.UpdateUserDTO;
 import com.example.retrospect.user.entity.UserEntity;
 import com.example.retrospect.user.repository.IUserRepository;
+import com.example.retrospect.util.ForgotPassword;
 import com.example.retrospect.util.UserJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,9 @@ public class UserService implements IUserService {
 
     @Autowired
     UserJWT userJWT;
+
+    @Autowired
+    ForgotPassword forgot;
 
     @Override
     public String userSignup(SignUpDTO signUpDTO) {
@@ -92,6 +96,19 @@ public class UserService implements IUserService {
             // Return error message or handle as needed
             return "Invalid email or old password";
         }
+    }
+    @Override
+    public String forgotPassword(String email) {
+        String otp = forgot.generateOtp();
+        forgot.sendOtp(email,otp);
+        return "OTP sent to " + email;
+    }
+
+    @Override
+    public String changePassword(String email, String otp, String newPassword) {
+        forgot.changePassword(email,otp,newPassword);
+
+        return "Password changed successfully";
     }
 
 

@@ -1,5 +1,7 @@
 package com.example.retrospect.createchatroom.controller;
 
+import com.example.retrospect.createchatroom.dto.RoomAccessRequestDTO;
+import com.example.retrospect.createchatroom.dto.RoomDTO;
 import com.example.retrospect.createchatroom.entity.CreateRoomEntity;
 import com.example.retrospect.createchatroom.repository.IRoomRepository;
 import com.example.retrospect.createchatroom.service.IRoomService;
@@ -15,8 +17,14 @@ public class Roomcontroller {
     @Autowired
     IRoomService iRoomService;
 
+    public Roomcontroller (IRoomService roomService) {
+        this.iRoomService = roomService;
+    }
+
     @Autowired
     IRoomRepository iRoomRepository;
+
+
 
     @GetMapping("/rooms")
     List<CreateRoomEntity> getAllRooms(){
@@ -26,12 +34,22 @@ public class Roomcontroller {
 
     @PostMapping("/addrooms")
 
-    CreateRoomEntity createRoom(@RequestBody CreateRoomEntity createRoomEntity){
-        return iRoomService.createRoom(createRoomEntity);
+    CreateRoomEntity createRoom(@RequestBody RoomDTO roomDTO){
+        return iRoomService.createRoom(roomDTO);
     }
 
     @PutMapping("/updateRoom/{roomId}")
     public CreateRoomEntity updateRoom(@PathVariable long roomId, @RequestBody CreateRoomEntity updatedRoomEntity){
         return iRoomService.updateRoom(roomId, updatedRoomEntity);
     }
+
+    @PostMapping("/rooms/check-access")
+    public String checkRoomAccess(@RequestBody RoomAccessRequestDTO requestDTO) {
+        if (iRoomService.checkRoomAccess(requestDTO.getEmail(), requestDTO.getRoomId())) {
+            return "access approved";
+        } else {
+            return "access denied";
+        }
+    }
+
 }
