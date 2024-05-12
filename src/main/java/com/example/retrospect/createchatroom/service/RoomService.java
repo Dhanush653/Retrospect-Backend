@@ -32,6 +32,8 @@ public class RoomService implements IRoomService{
     @Transactional
     public CreateRoomEntity createRoom(RoomDTO roomDTO) {
         CreateRoomEntity createRoomEntity = convertDtoToEntity(roomDTO);
+        // Set roomCreatedBy
+        createRoomEntity.setRoomCreatedBy(roomDTO.getRoomCreatedBy()); // assuming roomCreatedBy field exists in RoomDTO
         if ("restricted".equals(roomDTO.getAccess()) && roomDTO.getAllowedEmails() != null) {
             Set<AccessControl> accessControls = roomDTO.getAllowedEmails().stream()
                     .map(email -> {
