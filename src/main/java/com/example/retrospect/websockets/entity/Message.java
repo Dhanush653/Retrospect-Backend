@@ -1,9 +1,11 @@
 package com.example.retrospect.websockets.entity;
 
 
+import com.example.retrospect.roomToUser.entity.RoomToUserEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Entity
@@ -19,4 +21,6 @@ public class Message extends BaseModel {
     private String contentType;
     private  String room;
     private String username;
+    @ManyToOne
+    private RoomToUserEntity roomToUser;
 }

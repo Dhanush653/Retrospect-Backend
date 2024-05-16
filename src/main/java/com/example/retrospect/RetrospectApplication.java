@@ -10,5 +10,4 @@ public class RetrospectApplication {
     public static void main(String[] args) {
         SpringApplication.run(RetrospectApplication.class, args);
     }
-
 }
