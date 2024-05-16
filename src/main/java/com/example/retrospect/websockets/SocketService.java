@@ -30,6 +30,7 @@ public class SocketService {
         Message storedMessage = messageService.saveMessage(Message.builder()
                 .messageType(message.getMessageType())
                 .content(message.getContent())
+                .contentType(message.getContentType())
                 .room(message.getRoom())
                 .username(message.getUsername())
                 .build());

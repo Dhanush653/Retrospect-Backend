@@ -34,7 +34,6 @@ public class RoomToUserController {
             userDTO.setUserEmail(roomUser.getId().getUserEntity().getUserEmail());
             usersDTO.add(userDTO);
         }
-
         return usersDTO;
     }
 

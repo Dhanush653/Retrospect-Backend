@@ -88,5 +88,15 @@ public class RoomService implements IRoomService{
         return room != null && room.getAllowedEmails().stream().anyMatch(e -> e.getEmail().equals(email));
     }
 
+    @Override
+    public CreateRoomEntity getRoomById(long roomId) {
+        Optional<CreateRoomEntity> optionalRoomEntity = roomRepository.findById(roomId);
+        if (optionalRoomEntity.isPresent()) {
+            return optionalRoomEntity.get();
+        } else {
+            throw new NoSuchElementException("Room with id " + roomId + " not found");
+        }
+    }
+
 
 }

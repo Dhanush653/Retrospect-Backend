@@ -20,4 +20,6 @@ public interface IRoomService {
     CreateRoomEntity convertDtoToEntity(RoomDTO roomDTO);
 
     boolean checkRoomAccess(String email, long roomId);
+
+    CreateRoomEntity getRoomById(long  roomId);
 }
